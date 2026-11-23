@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+
+# Runtime data: never commit
+data/
+datasets/
+checkpoints/
+models/
+weights/
+logs/
+cache/
+*.sqlite3
+*.db
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
