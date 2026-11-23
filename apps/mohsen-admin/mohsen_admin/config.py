@@ -5,9 +5,9 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(extra="ignore")
 
-    admin_token: SecretStr = Field(
+    core_api_token: SecretStr = Field(
         default=SecretStr(""),
-        validation_alias="MOHSEN_ADMIN_TOKEN",
+        validation_alias="MOHSEN_API_TOKEN",
     )
     core_url: str = Field(
         default="http://127.0.0.1:8765",
