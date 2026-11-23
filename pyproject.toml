@@ -1,7 +1,11 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "mohsen-ai"
-version = "0.1.0"
-description = "Independent multilingual AI system with a dedicated local administration platform"
+version = "0.2.0"
+description = "Independent multilingual personal assistant and AI system with a dedicated local administration platform"
 requires-python = ">=3.11"
 dependencies = []
 
@@ -10,6 +14,10 @@ core = ["fastapi>=0.115,<1", "uvicorn[standard]>=0.30,<1", "pydantic>=2.8,<3", "
 admin = ["fastapi>=0.115,<1", "uvicorn[standard]>=0.30,<1", "httpx>=0.27,<1", "pydantic-settings>=2.5,<3"]
 dev = ["pytest>=8,<9", "httpx>=0.27,<1", "ruff>=0.6,<1"]
 training = ["torch>=2.4"]
+
+[tool.setuptools]
+packages = ["mohsen_core", "mohsen_admin"]
+package-dir = { mohsen_core = "apps/mohsen-core/mohsen_core", mohsen_admin = "apps/mohsen-admin/mohsen_admin" }
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
