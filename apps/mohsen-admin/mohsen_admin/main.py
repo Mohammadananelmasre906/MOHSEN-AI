@@ -37,7 +37,7 @@ refresh();setInterval(refresh,10000);
 
 @app.get("/api/core/status")
 async def core_status():
-    token = settings.admin_token.get_secret_value()
+    token = settings.core_api_token.get_secret_value()
     headers = {"Authorization": f"Bearer {token}"} if token else {}
     try:
         async with httpx.AsyncClient(timeout=3.0) as client:
