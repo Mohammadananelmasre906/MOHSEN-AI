@@ -1,16 +1,23 @@
 # Roadmap
 
-## Milestone 0 — Repository foundation (current)
-- [x] Monorepo layout for Core and Admin
-- [x] API boundary and local-first defaults
-- [x] Empty owner privacy-policy file
-- [ ] Verify installation and tests on the owner's Windows machine
+## Beta 0.2 — Personal assistant foundation
+- [x] Separate Core and Admin applications
+- [x] Authenticated Core API boundary
+- [x] Local SQLite persistence for tasks and notes
+- [x] Task create/list/complete/delete API
+- [x] Note create/list/search API
+- [x] Small explicit Arabic/English command router
+- [x] Arabic local Admin dashboard
+- [x] Tests for task, notes, command routing, and auth
+- [ ] Confirm GitHub Actions run and owner-machine installation
+- [ ] Background reminder scheduler and notification delivery
+- [ ] Admin authentication/session protection before any non-loopback use
 
-## Milestone 1 — Runtime and security
-- [ ] Configuration validation and secret handling
-- [ ] Owner authentication and session controls
-- [ ] Task lifecycle, cancellation, and audit events
-- [ ] Resource monitor and safe shutdown
+## Milestone 1 — Runtime hardening
+- [ ] Task lifecycle, cancellation, audit events, and safe shutdown
+- [ ] Resource monitor and background job indicator
+- [ ] Database backup/restore and retention controls
+- [ ] Configuration validation and security review
 
 ## Milestone 2 — Model research prototype
 - [ ] Tokenizer/data format decisions
@@ -21,7 +28,7 @@
 
 ## Milestone 3 — Data and learning pipeline
 - [ ] User-provided dataset import
-- [ ] Source provenance, licensing, quality and deduplication checks
+- [ ] Source provenance, licensing, quality, and deduplication checks
 - [ ] Human approval queue
 - [ ] Arabic/English balanced data evaluation
 - [ ] Training job orchestration and rollback
