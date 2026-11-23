@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 import httpx
 
 from .config import settings
@@ -75,41 +75,41 @@ refreshAll();setInterval(loadStatus,15000);
 @app.get("/api/core/status")
 async def core_status():
     data, code = await core_request("GET", "/api/v1/status")
-    return data if code == 200 else {"core": "unavailable", "reason": data.get("detail", "Core unavailable")}
+    return JSONResponse(content=data, status_code=code)
 
 
 @app.get("/api/tasks")
 async def tasks():
     data, code = await core_request("GET", "/api/v1/tasks?status=open")
-    return data if code == 200 else {"detail": data.get("detail", "Core unavailable")}
+    return JSONResponse(content=data, status_code=code)
 
 
 @app.post("/api/tasks")
 async def create_task(payload: dict):
     data, code = await core_request("POST", "/api/v1/tasks", payload)
-    return data if code < 400 else {"detail": data.get("detail", "Unable to create task")}
+    return JSONResponse(content=data, status_code=code)
 
 
 @app.post("/api/tasks/{task_id}/complete")
 async def complete_task(task_id: str):
     data, code = await core_request("POST", f"/api/v1/tasks/{task_id}/complete", {})
-    return data if code < 400 else {"detail": data.get("detail", "Unable to complete task")}
+    return JSONResponse(content=data, status_code=code)
 
 
 @app.get("/api/notes")
 async def notes(q: str | None = None):
     endpoint = "/api/v1/notes" + (f"?q={httpx.QueryParams({'q': q})['q']}" if q else "")
     data, code = await core_request("GET", endpoint)
-    return data if code == 200 else {"detail": data.get("detail", "Core unavailable")}
+    return JSONResponse(content=data, status_code=code)
 
 
 @app.post("/api/notes")
 async def create_note(payload: dict):
     data, code = await core_request("POST", "/api/v1/notes", payload)
-    return data if code < 400 else {"detail": data.get("detail", "Unable to save note")}
+    return JSONResponse(content=data, status_code=code)
 
 
 @app.post("/api/assistant/message")
 async def assistant_message(payload: dict):
     data, code = await core_request("POST", "/api/v1/assistant/message", payload)
-    return data if code < 400 else {"detail": data.get("reply", data.get("detail", "Assistant unavailable"))}
+    return JSONResponse(content=data, status_code=code)
