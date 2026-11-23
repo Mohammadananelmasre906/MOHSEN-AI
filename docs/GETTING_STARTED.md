@@ -4,42 +4,59 @@
 - Python 3.11 or newer.
 - Git.
 - Windows, Linux, or macOS.
-- Internet access only to install dependencies or use the optional research feature (not implemented yet).
 
-## Install development dependencies
+## Install
 
 From the repository root:
 
-```bash
+```powershell
 python -m venv .venv
-# Windows PowerShell: .venv\Scripts\Activate.ps1
-# Linux/macOS: source .venv/bin/activate
+.venv\Scripts\Activate.ps1
 python -m pip install -e ".[core,admin,dev]"
+Copy-Item .env.example .env
 ```
 
-## Run the Core
+Generate a strong random value for `MOHSEN_API_TOKEN` in `.env`. Keep `.env` private and never commit it. The Core stores personal data in the local SQLite file configured by `MOHSEN_DATABASE_PATH`; by default it uses the current user's home directory under `.mohsen/data`.
 
-```bash
+## Run Core
+
+In the first terminal:
+
+```powershell
 uvicorn mohsen_core.main:app --app-dir apps/mohsen-core --host 127.0.0.1 --port 8765
 ```
 
-Set `MOHSEN_API_TOKEN` in your environment before exposing any API beyond localhost. The default development mode is loopback-only.
-
-## Run the Admin
+## Run Admin
 
 In a second terminal:
 
-```bash
+```powershell
 uvicorn mohsen_admin.main:app --app-dir apps/mohsen-admin --host 127.0.0.1 --port 8766
 ```
 
-Open http://127.0.0.1:8766. Configure `MOHSEN_CORE_URL` and `MOHSEN_ADMIN_TOKEN` as appropriate. Admin forwards its configured Core token when calling the Core API.
+Open http://127.0.0.1:8766. Keep both services on `127.0.0.1`; this first beta is a local owner tool and is not hardened for LAN or public exposure.
+
+## Available beta features
+- Create, list, complete, and delete tasks through the Core API.
+- Save notes and search their title/content.
+- Use the Admin dashboard to create tasks and notes and view open tasks.
+- Send supported Arabic/English commands to `/api/v1/assistant/message`.
+
+Examples:
+- `أضف مهمة: مراجعة المحاضرة`
+- `اعرض مهامي`
+- `احفظ ملاحظة: فكرة المشروع | مساعد شخصي ثنائي اللغة`
+- `ابحث في الملاحظات: المشروع`
+- `add task: review lecture`
+- `list tasks`
+
+The task due-date field currently stores the supplied date/time text; it does not yet run a background notification scheduler.
 
 ## Run tests
 
-```bash
+```powershell
 python -m pytest
 ```
 
-## Important
-The chat endpoint deliberately reports that the language model is not ready. No pretrained model is included, and no claim of intelligent responses is made before training and evaluation.
+## Honest capability boundary
+This beta is a functional personal organizer, not yet a trained conversational language model. It does not include pretrained weights. Supported commands are handled by explicit application logic; free-form generation returns `503 model_not_ready` rather than inventing an AI answer. Internet research, desktop packaging, mobile access, and model training are not included in this beta yet.
